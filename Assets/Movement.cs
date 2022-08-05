@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public Vector2 speed = new Vector2(50,50);
+    public float speed = 1f;
+    public Rigidbody2D snake;
+    public Vector2 movement;
 
+    void Start()
+    {
+        snake = this.GetComponent<Rigidbody2D>();
+        snake.velocity = new Vector2(1, 0) * speed * Time.fixedDeltaTime;
+    }
     void Update()
     {
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
-        movement *= Time.deltaTime;
-
-        transform.Translate(movement);
+        snake.AddForce(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+        // movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        // snake.velocity += (movement * Time.fixedDeltaTime);
     }
+
 }
